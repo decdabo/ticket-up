@@ -1,26 +1,159 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+/* `dark:` solo con la clase .dark (que el sitio no usa). Sin esto Tailwind usa
+   prefers-color-scheme y los componentes de shadcn cambian con el tema del SO. */
+@custom-variant dark (&:is(.dark *));
+
+/* Tokens de marca Divercity (docs/MAIN_PLAN.md · Identidad visual) */
+@theme {
+  --color-ink: #0d0c0a;
+  --color-ink-soft: #1a1814;
+  --color-ink-line: #2a261f;
+  --color-gold-700: #8c6a2b;
+  --color-gold-500: #c9a44c;
+  --color-gold-300: #e9cf83;
+  --color-gold-ink: #6e5220;
+  --color-ivory: #f7f3ea;
+  --color-paper: #fffdf8;
+  --color-line: #e4dcc8;
+  --color-perf: #cdbf9c;
+  --color-stone: #6e675c;
+  --color-soft: #3a362f;
+  --color-on-ink: #e7e0d2;
+  --color-on-ink-muted: #b8ae9c;
+  --color-admin: #f4f1ea;
+  --color-ok: #2f6b3a;
+  --color-ok-bg: #e3f0e2;
+  --color-warn: #7a5a12;
+  --color-warn-bg: #fbf0d4;
+  --color-err: #a1361f;
+  --color-err-bg: #f6e3dd;
+  --color-info: #2e4a73;
+  --color-info-bg: #e4e8f0;
+
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-heading: var(--font-dm-sans), system-ui, sans-serif;
+  --font-display: var(--font-playfair), Georgia, serif;
+}
+
+/* Variables semánticas de shadcn/ui mapeadas a la marca. Sin tema .dark:
+   las secciones oscuras usan los tokens ink directamente. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f3ea;
+  --foreground: #0d0c0a;
+  --card: #fffdf8;
+  --card-foreground: #0d0c0a;
+  --popover: #fffdf8;
+  --popover-foreground: #0d0c0a;
+  --primary: #0d0c0a;
+  --primary-foreground: #e9cf83;
+  --secondary: #efe9dc;
+  --secondary-foreground: #0d0c0a;
+  --muted: #efe9dc;
+  --muted-foreground: #6e675c;
+  --accent: #efe9dc;
+  --accent-foreground: #0d0c0a;
+  --destructive: #a1361f;
+  --border: #e4dcc8;
+  --input: #cdbf9c;
+  --ring: #8c6a2b;
+  --chart-1: #8c6a2b;
+  --chart-2: #c9a44c;
+  --chart-3: #6e675c;
+  --chart-4: #3a362f;
+  --chart-5: #e9cf83;
+  --radius: 0.5rem;
+  --sidebar: #0d0c0a;
+  --sidebar-foreground: #e7e0d2;
+  --sidebar-primary: #c9a44c;
+  --sidebar-primary-foreground: #0d0c0a;
+  --sidebar-accent: #1a1814;
+  --sidebar-accent-foreground: #e9cf83;
+  --sidebar-border: #2a261f;
+  --sidebar-ring: #c9a44c;
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@utility bg-photo {
+  background-color: var(--color-ink-soft);
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(201 164 76 / 0.1) 0 2px,
+    transparent 2px 16px
+  );
+}
+
+@utility bg-map {
+  background-color: #e9e3d3;
+  background-image:
+    linear-gradient(#d9d0ba 1px, transparent 1px),
+    linear-gradient(90deg, #d9d0ba 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+@utility bg-gold {
+  background-image: linear-gradient(
+    135deg,
+    var(--color-gold-700) 0%,
+    var(--color-gold-500) 50%,
+    var(--color-gold-300) 100%
+  );
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    @apply font-sans;
+  }
 }
